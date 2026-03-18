@@ -242,6 +242,7 @@ function App() {
   const [periodFilter, setPeriodFilter] = useState('Total recolección')
   const [statusFilter, setStatusFilter] = useState('Media/P.O')
   const [viewMode, setViewMode] = useState('País')
+  const [currentView, setCurrentView] = useState('onboarding')
   const [activeMenu, setActiveMenu] = useState(() => {
     if (typeof window === 'undefined') return 'Dashboard general'
     return window.sessionStorage.getItem('activeMenu') || 'Dashboard general'
@@ -522,7 +523,44 @@ function App() {
     },
   ]
 
-  return (
+  return currentView === 'onboarding' ? (
+    <div className="onboarding-screen">
+      <div className="onboarding-smiley">
+        <div className="smiley-face">
+          <div className="smiley-eyes">
+            <div className="smiley-eye left"></div>
+            <div className="smiley-eye right"></div>
+          </div>
+          <div className="smiley-mouth"></div>
+        </div>
+      </div>
+
+      <div className="onboarding-content">
+        <h1 className="onboarding-title">¡Bienvenido a Greenside!</h1>
+        <p className="onboarding-subtitle">Selecciona cómo deseas acceder a la plataforma</p>
+
+        <div className="onboarding-buttons">
+          <button
+            className="onboarding-btn onboarding-btn--dashboard"
+            onClick={() => setCurrentView('dashboard')}
+          >
+            <Icon name="dashboard" />
+            <span className="onboarding-btn-label">Dashboard Web</span>
+            <span className="onboarding-btn-desc">Gestión completa desde escritorio</span>
+          </button>
+
+          <button
+            className="onboarding-btn onboarding-btn--app"
+            onClick={() => setCurrentView('greenapp')}
+          >
+            <Icon name="users" />
+            <span className="onboarding-btn-label">GreenApp Móvil</span>
+            <span className="onboarding-btn-desc">Recolección con GPS y cámara</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  ) : (
     <div className={`dashboard ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
       <aside
         className="sidebar"
